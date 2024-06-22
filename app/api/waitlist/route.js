@@ -1,11 +1,11 @@
 import pool from '../../../lib/db';
 
 export async function POST(request) {
-  const { name, email } = await request.json();
+  const { email } = await request.json();
 
   // Validate input
-  if (!name || !email) {
-    return new Response(JSON.stringify({ message: 'Name and email are required' }), {
+  if (!email) {
+    return new Response(JSON.stringify({ message: 'email is required' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -15,8 +15,8 @@ export async function POST(request) {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
-      const queryText = 'INSERT INTO waitlist(name, email) VALUES($1, $2) RETURNING *';
-      const res = await client.query(queryText, [name, email]);
+      const queryText = 'INSERT INTO waitlist(email) VALUES($1) RETURNING *';
+      const res = await client.query(queryText, [email]);
       await client.query('COMMIT');
 
       return new Response(JSON.stringify({ message: 'Successfully added to waitlist', data: res.rows[0] }), {
