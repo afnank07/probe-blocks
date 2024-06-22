@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
-  title: 'Waitlist App',
+  title: 'probe-blocks',
   description: 'Join our waitlist',
 }
 
